@@ -26,6 +26,26 @@ public class Address {
 		this.zip = zip;
 	}
 
+	@Nullable
+	public String getStreet() {
+		return street;
+	}
+
+	@Nullable
+	public String getCity() {
+		return city;
+	}
+
+	@Nullable
+	public String getState() {
+		return state;
+	}
+
+	@Nullable
+	public String getZip() {
+		return zip;
+	}
+
 	@Override
 	public boolean equals( Object o ) {
 		if( this == o ) return true;
@@ -54,12 +74,10 @@ public class Address {
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder();
-		sb.append("Address");
-		sb.append("{street='").append(street).append('\'');
-		sb.append(", city='").append(city).append('\'');
-		sb.append(", state='").append(state).append('\'');
-		sb.append(", zip='").append(zip).append('\'');
-		sb.append('}');
+		if( street != null ) sb.append(street).append(' ');
+		if( city != null ) sb.append(city).append(' ');
+		if( state != null ) sb.append(state).append(' ');
+		if( zip != null ) sb.append(zip).append(' ');
 		return sb.toString();
 	}
 }

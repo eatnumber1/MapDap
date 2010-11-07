@@ -1,17 +1,17 @@
 package com.eatnumber1.mapy;
 
-import org.jetbrains.annotations.Nullable;
+import geo.google.datamodel.GeoAddress;
 
 /**
  * @author Russell Harmon
  * @since Nov 5, 2010
  */
-public class Person {
+public class Member {
 	private String uid;
 	private Name name;
-	private Address address;
+	private GeoAddress address;
 
-	public Person( String uid, Name name, Address address ) {
+	public Member( String uid, Name name, GeoAddress address ) {
 		this.uid = uid;
 		this.name = name;
 		this.address = address;
@@ -25,21 +25,21 @@ public class Person {
 		return name;
 	}
 
-	public Address getAddress() {
+	public GeoAddress getAddress() {
 		return address;
 	}
 
 	@Override
 	public boolean equals( Object o ) {
 		if( this == o ) return true;
-		if( !(o instanceof Person) ) return false;
+		if( !(o instanceof Member) ) return false;
 
-		Person person = (Person) o;
+		Member member = (Member) o;
 
-		if( address != null ? !address.equals(person.address) : person.address != null ) return false;
-		if( name != null ? !name.equals(person.name) : person.name != null ) return false;
+		if( address != null ? !address.equals(member.address) : member.address != null ) return false;
+		if( name != null ? !name.equals(member.name) : member.name != null ) return false;
 		//noinspection RedundantIfStatement
-		if( uid != null ? !uid.equals(person.uid) : person.uid != null ) return false;
+		if( uid != null ? !uid.equals(member.uid) : member.uid != null ) return false;
 
 		return true;
 	}
@@ -55,7 +55,7 @@ public class Person {
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder();
-		sb.append("Person");
+		sb.append("Member");
 		sb.append("{uid='").append(uid).append('\'');
 		sb.append(", name=").append(name);
 		sb.append(", address=").append(address);

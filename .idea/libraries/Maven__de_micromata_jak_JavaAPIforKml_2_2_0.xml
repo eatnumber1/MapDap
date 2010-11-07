@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Maven: de.micromata.jak:JavaAPIforKml:2.2.0">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/de/micromata/jak/JavaAPIforKml/2.2.0/JavaAPIforKml-2.2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/de/micromata/jak/JavaAPIforKml/2.2.0/JavaAPIforKml-2.2.0-javadoc.jar!/" />
+      <root url="http://www.nilab.info/docs/jak091130/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/de/micromata/jak/JavaAPIforKml/2.2.0/JavaAPIforKml-2.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

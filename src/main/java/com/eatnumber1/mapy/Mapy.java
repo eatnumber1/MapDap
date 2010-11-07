@@ -1,12 +1,22 @@
 package com.eatnumber1.mapy;
 
+import com.google.gdata.util.ServiceException;
+import geo.google.GeoException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.IOException;
+
 public class Mapy {
-	public static void main( String[] args ) {
+	public static void main( String[] args ) throws ServiceException, IOException, GeoException {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("ldap.xml");
-		PersonDao dao = (PersonDao) ctx.getBean("personDao");
-		for( Person person : dao.getPeople() ) System.out.println(person);
+
+		CSHMapsService maps = (CSHMapsService) ctx.getBean("cshMapsService");
+		CSHMapEntry map = maps.createMap();
+
+		MemberDao dao = (MemberDao) ctx.getBean("personDao");
+		for( Member person : dao.getPeople() ) {
+			map.addMember(person);
+		}
 	}
 }

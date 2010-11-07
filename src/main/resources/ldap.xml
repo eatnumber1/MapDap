@@ -6,7 +6,6 @@
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-2.5.xsd">
-
 	<bean id="credentialsProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:credentials.properties"/>
 	</bean>
@@ -16,8 +15,8 @@
 	<bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource">
 		<property name="url" value="ldaps://ldap.csh.rit.edu:636"/>
 		<property name="base" value="dc=csh,dc=rit,dc=edu"/>
-		<property name="userDn" value="uid=${credentials.username},ou=Users,dc=csh,dc=rit,dc=edu"/>
-		<property name="password" value="${credentials.password}"/>
+		<property name="userDn" value="uid=${ldap.username},ou=Users,dc=csh,dc=rit,dc=edu"/>
+		<property name="password" value="${ldap.password}"/>
 		<property name="authenticationStrategy" ref="authenticationStrategy"/>
 	</bean>
 
@@ -34,8 +33,24 @@
 		<constructor-arg ref="poolingContextSource"/>
 	</bean>
 
-	<bean id="personDao" class="com.eatnumber1.mapy.PersonDao">
-		<constructor-arg ref="ldapTemplate"/>
+	<bean id="geocoder" class="geo.google.GeoAddressStandardizer">
+		<constructor-arg value="${google.maps.key}"/>
 	</bean>
 
+	<bean id="personDao" class="com.eatnumber1.mapy.MemberDao">
+		<constructor-arg ref="ldapTemplate"/>
+		<constructor-arg ref="geocoder"/>
+	</bean>
+
+	<bean id="mapsServiceFactory" class="com.eatnumber1.mapy.MapsServiceFactory">
+		<property name="username" value="${google.username}"/>
+		<property name="password" value="${google.password}"/>
+		<property name="serviceName" value="Mapy"/>
+	</bean>
+
+	<bean id="mapsService" factory-bean="mapsServiceFactory" factory-method="produce"/>
+
+	<bean id="cshMapsService" class="com.eatnumber1.mapy.CSHMapsService">
+		<constructor-arg ref="mapsService"/>
+	</bean>
 </beans>
