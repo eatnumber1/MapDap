@@ -1,6 +1,5 @@
 package com.eatnumber1.mapy;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -8,9 +7,6 @@ import org.jetbrains.annotations.Nullable;
  * @since Nov 5, 2010
  */
 public class Address {
-	@Nullable
-	private String type;
-
 	@Nullable
 	private String street;
 
@@ -23,25 +19,11 @@ public class Address {
 	@Nullable
 	private String zip;
 
-	public Address( String type, String street, String city, String state, String zip ) {
-		this.type = type;
+	public Address( String street, String city, String state, String zip ) {
 		this.street = street;
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
-	}
-
-	@Override
-	public String toString() {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("Address");
-		sb.append("{type='").append(type).append('\'');
-		sb.append(", street='").append(street).append('\'');
-		sb.append(", city='").append(city).append('\'');
-		sb.append(", state='").append(state).append('\'');
-		sb.append(", zip='").append(zip).append('\'');
-		sb.append('}');
-		return sb.toString();
 	}
 
 	@Override
@@ -54,7 +36,6 @@ public class Address {
 		if( city != null ? !city.equals(address.city) : address.city != null ) return false;
 		if( state != null ? !state.equals(address.state) : address.state != null ) return false;
 		if( street != null ? !street.equals(address.street) : address.street != null ) return false;
-		if( type != null ? !type.equals(address.type) : address.type != null ) return false;
 		//noinspection RedundantIfStatement
 		if( zip != null ? !zip.equals(address.zip) : address.zip != null ) return false;
 
@@ -63,11 +44,22 @@ public class Address {
 
 	@Override
 	public int hashCode() {
-		int result = type != null ? type.hashCode() : 0;
-		result = 31 * result + (street != null ? street.hashCode() : 0);
+		int result = street != null ? street.hashCode() : 0;
 		result = 31 * result + (city != null ? city.hashCode() : 0);
 		result = 31 * result + (state != null ? state.hashCode() : 0);
 		result = 31 * result + (zip != null ? zip.hashCode() : 0);
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Address");
+		sb.append("{street='").append(street).append('\'');
+		sb.append(", city='").append(city).append('\'');
+		sb.append(", state='").append(state).append('\'');
+		sb.append(", zip='").append(zip).append('\'');
+		sb.append('}');
+		return sb.toString();
 	}
 }

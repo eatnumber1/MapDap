@@ -45,7 +45,6 @@ public class PersonDao {
 					protected Object doMapFromContext( DirContextOperations ctx ) {
 						return new LdapAddress(
 								((DistinguishedName) ctx.getDn()).getLdapRdn(1).getValue(),
-								ctx.getStringAttribute("addressName"),
 								ctx.getStringAttribute("addressStreet"),
 								ctx.getStringAttribute("addressCity"),
 								ctx.getStringAttribute("addressState"),
@@ -110,8 +109,8 @@ public class PersonDao {
 		@NotNull
 		private String uid;
 
-		private LdapAddress( @NotNull String uid, String type, String street, String city, String state, String zip ) {
-			super(type, street, city, state, zip);
+		private LdapAddress( @NotNull String uid, String street, String city, String state, String zip ) {
+			super(street, city, state, zip);
 			this.uid = uid;
 		}
 
