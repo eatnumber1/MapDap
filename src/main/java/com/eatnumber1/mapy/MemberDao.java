@@ -61,6 +61,7 @@ public class MemberDao {
 					@Override
 					protected Object doMapFromContext( DirContextOperations ctx ) {
 						log.trace("Mapping context " + ctx + " to an LdapGeoUsAddress");
+						// TODO: Hax
 						String street = ctx.getStringAttribute("addressStreet");
 						if( street != null && street.contains("#") ) street = street.replace("#", "Number ");
 						return new LdapGeoUsAddress(
@@ -103,6 +104,8 @@ public class MemberDao {
 		Map<String, GeoAddress> addresses = new HashMap<String, GeoAddress>(addressList.size());
 		log.debug("Geocoding addresses");
 		for( LdapGeoUsAddress addr : addressList ) {
+			// Shortcut out of the address is empty.
+			if( addr.isEmpty() ) continue;
 			String addressLine = addr.toAddressLine();
 			log.trace("Geocoding address " + addressLine);
 			try {
@@ -112,29 +115,10 @@ public class MemberDao {
 					log.debug("Addresses are " + geoAddresses);
 				} else {
 					GeoAddress geoAddress = geoAddresses.get(0);
-					if( !GeoAddressAccuracy.UNKNOWN_LOCATION.equals(geoAddress.getAccuracy()) ) {
-						addresses.put(addr.getUid(), geoAddress);
-					} else {
-						log.debug("Geocoded address " + geoAddress + " is at an unknown location");
-					}
+					if( GeoAddressAccuracy.UNKNOWN_LOCATION.equals(geoAddress.getAccuracy()) )
+						log.warn("Geocoded address " + geoAddress + " is at an unknown location");
+					addresses.put(addr.getUid(), geoAddress);
 				}
-				/*} catch( RuntimeException e ) {
-				// TODO: Shouldn't need to ignore these.
-				Throwable cause = e.getCause();
-				if( cause != null && UnmarshalException.class.equals(cause.getClass()) ) {
-					Throwable linked = ((UnmarshalException) e.getCause()).getLinkedException();
-					if( linked != null && SAXParseException.class.equals(linked.getClass()) ) {
-						if( log.isTraceEnabled() ) {
-							log.trace("Unable to geocode address " + addressLine, e);
-						} else {
-							log.warn("Unable to geocode address " + addressLine);
-						}
-					} else {
-						throw e;
-					}
-				} else {
-					throw e;
-				}*/
 			} catch( GeoException e ) {
 				if( !GeoStatusCode.G_GEO_UNKNOWN_ADDRESS.equals(e.getStatus()) ) throw e;
 				if( log.isTraceEnabled() ) {
@@ -189,6 +173,10 @@ public class MemberDao {
 		@NotNull
 		public String getUid() {
 			return uid;
+		}
+
+		public boolean isEmpty() {
+			return "".equals(getAddressLine1()) && "".equals(getCity()) && "".equals(getState()) && "".equals(getPostalCode());
 		}
 	}
 }
