@@ -70,12 +70,12 @@ public class CSHSocketFactory extends SocketFactory {
 
 
 	@Override
-	public Socket createSocket( String s, int i ) throws IOException, UnknownHostException {
+	public Socket createSocket( String s, int i ) throws IOException {
 		return delegateFactory.createSocket(s, i);
 	}
 
 	@Override
-	public Socket createSocket( String s, int i, InetAddress inetAddress, int i1 ) throws IOException, UnknownHostException {
+	public Socket createSocket( String s, int i, InetAddress inetAddress, int i1 ) throws IOException {
 		return delegateFactory.createSocket(s, i, inetAddress, i1);
 	}
 

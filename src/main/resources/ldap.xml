@@ -21,15 +21,21 @@
 		<property name="authenticationStrategy" ref="authenticationStrategy"/>
 	</bean>
 
+	<bean id="contextValidator" class="org.springframework.ldap.pool.validation.DefaultDirContextValidator"/>
+
 	<bean id="poolingContextSource" class="org.springframework.ldap.pool.factory.PoolingContextSource">
 		<property name="contextSource" ref="contextSource"/>
+		<property name="dirContextValidator" ref="contextValidator"/>
+		<property name="testOnBorrow" value="true"/>
+		<property name="testWhileIdle" value="true"/>
 	</bean>
 
 	<bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
 		<constructor-arg ref="poolingContextSource"/>
 	</bean>
 
-	<bean id="addressDao" class="com.eatnumber1.mapy.AddressDao">
+	<bean id="personDao" class="com.eatnumber1.mapy.PersonDao">
 		<constructor-arg ref="ldapTemplate"/>
 	</bean>
+
 </beans>
