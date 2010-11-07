@@ -6,7 +6,6 @@ import geo.google.datamodel.GeoAddress;
 import geo.google.datamodel.GeoAddressAccuracy;
 import geo.google.datamodel.GeoStatusCode;
 import geo.google.datamodel.GeoUsAddress;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jetbrains.annotations.NotNull;
@@ -16,10 +15,8 @@ import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.AbstractContextMapper;
 import org.springframework.ldap.filter.AndFilter;
 import org.springframework.ldap.filter.EqualsFilter;
-import org.xml.sax.SAXParseException;
 
 import javax.naming.directory.SearchControls;
-import javax.xml.bind.UnmarshalException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -64,12 +61,14 @@ public class MemberDao {
 					@Override
 					protected Object doMapFromContext( DirContextOperations ctx ) {
 						log.trace("Mapping context " + ctx + " to an LdapGeoUsAddress");
+						String street = ctx.getStringAttribute("addressStreet");
+						if( street != null && street.contains("#") ) street = street.replace("#", "Number ");
 						return new LdapGeoUsAddress(
 								((DistinguishedName) ctx.getDn()).getLdapRdn(1).getValue(),
-								StringEscapeUtils.escapeHtml(ctx.getStringAttribute("addressStreet")),
-								StringEscapeUtils.escapeHtml(ctx.getStringAttribute("addressCity")),
-								StringEscapeUtils.escapeHtml(ctx.getStringAttribute("addressState")),
-								StringEscapeUtils.escapeHtml(ctx.getStringAttribute("addressZip"))
+								street,
+								ctx.getStringAttribute("addressCity"),
+								ctx.getStringAttribute("addressState"),
+								ctx.getStringAttribute("addressZip")
 						);
 					}
 				});
@@ -119,7 +118,7 @@ public class MemberDao {
 						log.debug("Geocoded address " + geoAddress + " is at an unknown location");
 					}
 				}
-			} catch( RuntimeException e ) {
+				/*} catch( RuntimeException e ) {
 				// TODO: Shouldn't need to ignore these.
 				Throwable cause = e.getCause();
 				if( cause != null && UnmarshalException.class.equals(cause.getClass()) ) {
@@ -135,7 +134,7 @@ public class MemberDao {
 					}
 				} else {
 					throw e;
-				}
+				}*/
 			} catch( GeoException e ) {
 				if( !GeoStatusCode.G_GEO_UNKNOWN_ADDRESS.equals(e.getStatus()) ) throw e;
 				if( log.isTraceEnabled() ) {
@@ -181,10 +180,10 @@ public class MemberDao {
 
 		private LdapGeoUsAddress( @NotNull String uid, String street, String city, String state, String zip ) {
 			this.uid = uid;
-			setAddressLine1(street);
-			setCity(city);
-			setState(state);
-			setPostalCode(zip);
+			if( street != null ) setAddressLine1(street);
+			if( city != null ) setCity(city);
+			if( state != null ) setState(state);
+			if( zip != null ) setPostalCode(zip);
 		}
 
 		@NotNull

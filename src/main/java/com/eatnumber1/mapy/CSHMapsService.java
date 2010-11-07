@@ -42,7 +42,7 @@ public class CSHMapsService {
 		entry.setSummary(new PlainTextConstruct("CSH member's home addresses."));
 		Person author = new Person("Russell Harmon", null, "russ@csh.rit.edu");
 		entry.getAuthors().add(author);
-		log.debug("Creating map entry" + entry);
+		log.debug("Creating map entry " + entry);
 		entry = service.insert(mapUrl, entry);
 		return new CSHMapEntry(service, entry);
 	}
