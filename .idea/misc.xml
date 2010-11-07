@@ -31,6 +31,9 @@
       </list>
     </option>
   </component>
+  <component name="ProjectResources">
+    <resource url="log4j.dtd" location="$MAVEN_REPOSITORY$/log4j/log4j/1.2.15/log4j-1.2.15.jar!/org/apache/log4j/xml/log4j.dtd" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>

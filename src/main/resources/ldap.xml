@@ -37,7 +37,7 @@
 		<constructor-arg value="${google.maps.key}"/>
 	</bean>
 
-	<bean id="personDao" class="com.eatnumber1.mapy.MemberDao">
+	<bean id="memberDao" class="com.eatnumber1.mapy.MemberDao">
 		<constructor-arg ref="ldapTemplate"/>
 		<constructor-arg ref="geocoder"/>
 	</bean>

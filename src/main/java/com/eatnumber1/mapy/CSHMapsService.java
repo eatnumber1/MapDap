@@ -6,6 +6,9 @@ import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.maps.MapEntry;
 import com.google.gdata.data.maps.MapFeed;
 import com.google.gdata.util.ServiceException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -16,6 +19,9 @@ import java.net.URL;
  * @since Nov 6, 2010
  */
 public class CSHMapsService {
+	@NotNull
+	private static Log log = LogFactory.getLog(CSHMapsService.class);
+
 	private MapsService service;
 
 	public CSHMapsService( MapsService service ) {
@@ -31,16 +37,13 @@ public class CSHMapsService {
 		} catch( MalformedURLException e ) {
 			throw new RuntimeException(e);
 		}
-
-		// Create a MapEntry object
-		MapEntry myEntry = new MapEntry();
-		myEntry.setTitle(new PlainTextConstruct("CSH Members"));
-		myEntry.setSummary(new PlainTextConstruct("CSH member's home addresses."));
+		MapEntry entry = new MapEntry();
+		entry.setTitle(new PlainTextConstruct("CSH Members"));
+		entry.setSummary(new PlainTextConstruct("CSH member's home addresses."));
 		Person author = new Person("Russell Harmon", null, "russ@csh.rit.edu");
-		myEntry.getAuthors().add(author);
-
-		MapEntry entry = service.insert(mapUrl, myEntry);
-
+		entry.getAuthors().add(author);
+		log.debug("Creating map entry" + entry);
+		entry = service.insert(mapUrl, entry);
 		return new CSHMapEntry(service, entry);
 	}
 }

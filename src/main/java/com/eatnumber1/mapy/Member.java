@@ -1,6 +1,7 @@
 package com.eatnumber1.mapy;
 
 import geo.google.datamodel.GeoAddress;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Russell Harmon
@@ -9,6 +10,8 @@ import geo.google.datamodel.GeoAddress;
 public class Member {
 	private String uid;
 	private Name name;
+
+	@Nullable
 	private GeoAddress address;
 
 	public Member( String uid, Name name, GeoAddress address ) {
@@ -25,6 +28,7 @@ public class Member {
 		return name;
 	}
 
+	@Nullable
 	public GeoAddress getAddress() {
 		return address;
 	}
@@ -58,7 +62,7 @@ public class Member {
 		sb.append("Member");
 		sb.append("{uid='").append(uid).append('\'');
 		sb.append(", name=").append(name);
-		sb.append(", address=").append(address);
+		sb.append(", address=").append(address.getAddressLine());
 		sb.append('}');
 		return sb.toString();
 	}

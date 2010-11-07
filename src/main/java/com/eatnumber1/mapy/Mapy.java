@@ -14,9 +14,9 @@ public class Mapy {
 		CSHMapsService maps = (CSHMapsService) ctx.getBean("cshMapsService");
 		CSHMapEntry map = maps.createMap();
 
-		MemberDao dao = (MemberDao) ctx.getBean("personDao");
-		for( Member person : dao.getPeople() ) {
-			map.addMember(person);
+		MemberDao dao = (MemberDao) ctx.getBean("memberDao");
+		for( Member person : dao.getMembers() ) {
+			if( person.getAddress() != null ) map.addMember(person);
 		}
 	}
 }
