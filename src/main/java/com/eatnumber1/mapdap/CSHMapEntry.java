@@ -1,4 +1,4 @@
-package com.eatnumber1.mapy;
+package com.eatnumber1.mapdap;
 
 import com.google.gdata.client.maps.MapsService;
 import com.google.gdata.data.PlainTextConstruct;

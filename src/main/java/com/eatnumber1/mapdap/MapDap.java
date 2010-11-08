@@ -1,4 +1,4 @@
-package com.eatnumber1.mapy;
+package com.eatnumber1.mapdap;
 
 import com.google.gdata.util.ServiceException;
 import geo.google.GeoException;
@@ -7,7 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 
-public class Mapy {
+public class MapDap {
 	public static void main( String[] args ) throws ServiceException, IOException, GeoException {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("ldap.xml");
 

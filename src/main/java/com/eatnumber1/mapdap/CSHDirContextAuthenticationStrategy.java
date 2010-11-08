@@ -1,4 +1,4 @@
-package com.eatnumber1.mapy;
+package com.eatnumber1.mapdap;
 
 import org.springframework.ldap.core.support.DirContextAuthenticationStrategy;
 import org.springframework.ldap.core.support.SimpleDirContextAuthenticationStrategy;

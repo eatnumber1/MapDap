@@ -10,7 +10,7 @@
 		<property name="location" value="classpath:credentials.properties"/>
 	</bean>
 
-	<bean id="authenticationStrategy" class="com.eatnumber1.mapy.CSHDirContextAuthenticationStrategy"/>
+	<bean id="authenticationStrategy" class="com.eatnumber1.mapdap.CSHDirContextAuthenticationStrategy"/>
 
 	<bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource">
 		<property name="url" value="ldaps://ldap.csh.rit.edu:636"/>
@@ -37,20 +37,20 @@
 		<constructor-arg value="${google.maps.key}"/>
 	</bean>
 
-	<bean id="memberDao" class="com.eatnumber1.mapy.MemberDao">
+	<bean id="memberDao" class="com.eatnumber1.mapdap.MemberDao">
 		<constructor-arg ref="ldapTemplate"/>
 		<constructor-arg ref="geocoder"/>
 	</bean>
 
-	<bean id="mapsServiceFactory" class="com.eatnumber1.mapy.MapsServiceFactory">
+	<bean id="mapsServiceFactory" class="com.eatnumber1.mapdap.MapsServiceFactory">
 		<property name="username" value="${google.username}"/>
 		<property name="password" value="${google.password}"/>
-		<property name="serviceName" value="Mapy"/>
+		<property name="serviceName" value="MapDap"/>
 	</bean>
 
 	<bean id="mapsService" factory-bean="mapsServiceFactory" factory-method="produce"/>
 
-	<bean id="cshMapsService" class="com.eatnumber1.mapy.CSHMapsService">
+	<bean id="cshMapsService" class="com.eatnumber1.mapdap.CSHMapsService">
 		<constructor-arg ref="mapsService"/>
 	</bean>
 </beans>
